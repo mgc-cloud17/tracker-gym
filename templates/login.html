@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Gym Tracker</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <main class="contenedor-principal">
+        <div class="contenedor-form">
+            <h2>🔑 Iniciar Sesión</h2>
+            <form action="/login" method="POST">
+                <div class="campo-form">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" name="usuario" id="usuario" required autocomplete="off">
+                </div>
+                <div class="campo-form">
+                    <label for="password">Constraseña:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-guardar">Entrar</button>
+            </form>
+            <p style="margin-top: 15px; text-align: center; color: #888;">¿No tienes cuenta? <a href="/register" style="color: #00adb5;">Regístrate aquí</a></p>
+        </div>    
+    </main>
+</body>
+</html>

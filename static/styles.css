@@ -1,0 +1,264 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1e1e1e;
+    padding: 15px 30px;
+    border-bottom: 2px solid #00adb5;
+    margin-bottom: 40px;
+}
+
+.encabezado-app {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 18px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #333;
+}
+
+.encabezado-app h1 {
+    margin: 0;
+    color: #00adb5;
+    font-size: 24px;
+}
+
+.btn-logout {
+    color: #ff4444;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-logout:hover {
+    background-color: rgba(255, 68, 68, 0.15);
+}
+
+h1 {
+    margin: 0;
+    color: #00adb5;
+}
+
+main {
+    padding: 0 20px 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .contenedor-form {
+    max-width: 450px;       
+    margin: 50px auto;      
+    box-sizing: border-box;
+
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    margin-top: 0; 
+    margin-bottom: 35px; 
+}
+
+.contenedor-formulario,
+.contenedor-estadisticas,
+.contenedor-historial {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 650px; 
+    border: 1px solid #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    margin-top: 0; 
+    margin-bottom: 35px; 
+}
+
+.contenedor-historial {
+    margin-bottom: 0;
+}
+
+.contenedor-formulario h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #00adb5;
+    text-align: center;
+}
+
+.grupo-control {
+    margin-bottom: 15px;
+}
+
+.grupo-control label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #eeeeee;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.grupo-control input:focus {
+    border-color: #00adb5;
+    outline: none;
+}
+
+.campo-form input:focus {
+    border-color: #00adb5;
+    outline: none;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.col {
+    flex: 1;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00adb5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #008c95;
+}
+
+
+.contenedor-historial h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #eeeeee;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    color: #eeeeee;
+    font-size: 15px;
+}
+
+th {
+    color: #00adb5;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background-color: #252525;
+}
+
+.txt-resaltado {
+    color: #fff;
+    font-weight: 500;
+}
+
+.txt-fecha {
+    color: #888;
+    font-size: 13px;
+}
+
+.tabla-vacia {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: rgba(255, 68, 68, 0.2);
+}
+
+
+.tarjeta-volumen {
+    background-color: #252525;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    border-left: 4px solid #00adb5;
+    margin-bottom: 20px;
+}
+
+.tarjeta-volumen p {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tarjeta-volumen h3 {
+    margin: 5px 0 0 0;
+    color: #00adb5;
+    font-size: 28px
+}
+
+.tabla-records h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #eeeeee;
+}
+
+.txt-record {
+    color: #ffde59;
+    font-weight: bold;
+}
+

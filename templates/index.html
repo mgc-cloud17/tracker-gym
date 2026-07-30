@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker de Gym</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <h1>🏋️ Gym Tracker</h1>
+        <a href="/logout" class="btn-logout">Cerrar Sesión 🚪</a>
+    </header>
+    <main>
+        <div class="contenedor-formulario">
+            <h2>💪 Registrar Entrenamiento</h2>
+
+            <!-- El formulario enviará los datos a la ruta /registrar mediante POST -->
+            <form action="/registrar" method="POST">
+                <div class="grupo-control">
+                    <label for="ejercicio">Ejercicio</label>
+                    <input type="text" id="ejercicio" name="ejercicio"
+                    placeholder="Ej. Press de Banca, Sentadillas" required>
+                </div>
+                <div class="grupo-control row">
+                    <div class="col">
+                        <label for="peso">Peso (kg)</label>
+                        <input type="number" id="peso" name="peso" step="0.01"
+                        placeholder="Ej. 68" required>
+                    </div>
+                    <div class="col">
+                        <label for="repeticiones">Repeticiones</label>
+                        <input type="number" id="repeticiones" name="repeticiones" placeholder="Ej. 10" required>
+                    </div>
+                </div>
+                <div class="campo-form">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" name="fecha" id="fecha">
+                </div>
+                <button type="submit">Guardar registro</button>
+            </form>
+        </div>
+        <!-- Contenedor de Estadísticas -->
+         <div class="contenedor-estadisticas">
+            <h2>📊 Tus Estadísticas</h2>
+
+            <div class="tarjeta-volumen">
+                <p>Volumen Total Movido</p>
+                <!-- Formateamos el número para que muestre 2 decimales -->
+                 <h3>{{ "%.2f"|format(volumen_total) }} kg</h3>
+            </div>
+            <div class="tabla-records">
+                <h3>🏆 Récords Históricos (PRs)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ejercicio</th>
+                            <th>Peso Máximo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records%}
+                        <tr>
+                            <td>{{ record.ejercicio }}</td>
+                            <td class="txt-record">{{ record.max_peso }} kg</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="2" class="tabla-vacia">Registra tu primera serie para establecer un récord</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+         </div>
+        <!-- Contenedor para la tabla de historial-->
+         <div class="contenedor-historial">
+            <h3>📜 Historial de Levantamientos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ejercicio</th>
+                        <th>Peso (kg)</th>
+                        <th>Reps</th>
+                        <th>Fecha</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Usamos Jinja para recorrer cada fila que viene de la base de datos-->
+                     {% for entrenamiento in entrenamientos %}
+                    <tr>
+                        <td class="txt-resaltado">{{ entrenamiento.ejercicio }}</td>
+                        <td>{{ entrenamiento.peso }}</td>
+                        <td>{{ entrenamiento.repeticiones }}</td>
+                        <td class="txt-fecha">{{ entrenamiento.fecha }}</td>
+                        <td>
+                            <form action="/eliminar" method="POST" style="margin: 0;">
+                                <input type="hidden" name="id" value="{{ entrenamiento.id }}">
+                                <button type="submit" class="btn-eliminar" onclick="return confirm('¿Seguro que quieres borrar este registro?');">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <!-- Esto se muestra solo si la base de datos esta completamente vacia-->
+                    <tr>
+                        <td colspan="4" class="tabla-vacia">Aún no hay entrenamientos registrados. ¡Dale con todo hoy!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+         </div>
+    </main>
+</body>
+</html>
