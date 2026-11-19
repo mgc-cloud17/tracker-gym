@@ -1,32 +1,90 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Cuenta - Gym Tracker</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <main class="contenedor-principal">
-        <div class="contenedor-form">
-            <h2>📝 Crear Cuenta</h2>
-            <form action="/register" method="POST">
-                <div class="campo-form">
-                    <label for="usuario">Usuario:</label>
-                    <input type="text" name="usuario" id="usuario" required autocomplete="off">
-                </div>  
-                <div class="campo-form">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="campo-form">
-                    <label for="confirmation">Confirmar Contraseña:</label>
-                    <input type="password" id="confirmation" name="confirmation" required>
-                </div>
-                <button type="submit" class="btn-guardar">Registrarse</button>
-            </form>
-            <p style="margin-top: 15px; text-align: center; color: #888;">¿Ya tienes cuenta? <a href="/login" style="color: #00adb5;">Inicia sesión</a></p>
+{% extends "layout.html" %}
+
+{% block title %}Crear Cuenta — Gym Tracker{% endblock %}
+
+{% block main_class %}auth-container{% endblock %}
+
+{% block content %}
+<section class="auth-card">
+    <div class="auth-header">
+        <div class="auth-badge" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
         </div>
-    </main>
-</body>
-</html>
+        <h1 class="auth-title">Crear Cuenta</h1>
+        <p class="auth-subtitle">Comienza a registrar tus entrenamientos y medir tu progreso.</p>
+    </div>
+
+    <form action="/register" method="POST" class="form-stack">
+        <div class="form-field">
+            <label for="usuario">Usuario</label>
+            <input
+                type="text"
+                name="usuario"
+                id="usuario"
+                autocomplete="username"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="none"
+                enterkeyhint="next"
+                placeholder="Elige un nombre de usuario"
+                required
+            >
+        </div>
+
+        <div class="form-field">
+            <div class="label-row">
+                <label for="password">Contraseña</label>
+                <button
+                    type="button"
+                    class="btn-text-toggle"
+                    data-toggle-password="password"
+                    aria-pressed="false"
+                    aria-label="Mostrar contraseña"
+                >Mostrar</button>
+            </div>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="new-password"
+                enterkeyhint="next"
+                placeholder="Crea una contraseña segura"
+                required
+            >
+        </div>
+
+        <div class="form-field">
+            <div class="label-row">
+                <label for="confirmation">Confirmar Contraseña</label>
+                <button
+                    type="button"
+                    class="btn-text-toggle"
+                    data-toggle-password="confirmation"
+                    aria-pressed="false"
+                    aria-label="Mostrar confirmación de contraseña"
+                >Mostrar</button>
+            </div>
+            <input
+                type="password"
+                id="confirmation"
+                name="confirmation"
+                autocomplete="new-password"
+                enterkeyhint="done"
+                placeholder="Repite tu contraseña"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn-primary">Crear Cuenta</button>
+    </form>
+
+    <p class="auth-footer">
+        ¿Ya tienes cuenta? <a href="/login" class="text-link">Inicia sesión</a>
+    </p>
+</section>
+{% endblock %}

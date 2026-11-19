@@ -1,3 +1,5 @@
+import os
+import sqlite3
 from cs50 import SQL
 from flask import Flask, jsonify, request, render_template, redirect, session
 from datetime import date
@@ -7,6 +9,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 app =  Flask(__name__)
 
 app.config["SECRET_KEY"] = "clave_secreta_super_segura_gym"
+
+if not os.path.exists("gym.db"):
+    with sqlite3.connect("gym.db") as conn:
+        with open("schema.sql", "r", encoding="utf-8") as f:
+            conn.executescript(f.read())
 
 db = SQL("sqlite:///gym.db")
 
@@ -152,3 +159,7 @@ def eliminar():
     session["user_id"])
 
     return redirect("/")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

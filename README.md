@@ -1,78 +1,128 @@
-# 🏋️ Gym Tracker - Web Application
+# 🏋️ Gym Tracker
 
-Una aplicación web interactiva para el seguimiento de entrenamientos en el gimnasio, cálculo de volumen de carga y registro de récords personales por usuario.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![SQLite3](https://img.shields.io/badge/SQLite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Jinja2](https://img.shields.io/badge/Jinja2-B41717?style=for-the-badge&logo=jinja&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-Desarrollada como proyecto de práctica enfocado en arquitectura web, autenticación segura y persistencia de datos relacionales.
+A full-stack web application for tracking strength training workouts, calculating cumulative lifting volume, and automatically monitoring personal records (PRs) per user.
 
----
-
-## 🚀 Características Principales
-
-* **Autenticación Segura de Usuarios:** Sistema de registro e inicio de sesión con sesiones cifradas (`Flask-Session`) y contraseñas encriptadas mediante *hashing* (`Werkzeug`).
-* **Aislamiento de Datos:** Cada usuario gestiona únicamente su propio historial de entrenamientos y estadísticas.
-* **Gestión de Entrenamientos (CRUD):** Registro de ejercicios (peso, repeticiones, fecha personalizable) y eliminación de series.
-* **Métricas y Estadísticas:**
-  * **Volumen Total:** Cálculo automático del tonelaje movido en kg (`∑ peso × repeticiones`).
-  * **Récords Personales (PRs):** Identificación automática del peso máximo levantado por cada ejercicio.
-* **Interfaz Adaptativa:** Diseño en modo oscuro (*Dark Mode*) fluido y receptivo.
+Developed as a **CS50 Final Project**, this application focuses on clean server-side rendering, secure user authentication, and relational data persistence with SQLite3.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## ✨ Key Features
 
-* **Backend:** Python 3, Flask.
-* **Base de Datos:** SQLite 3 (a través de la librería `cs50`).
-* **Frontend:** HTML5, CSS3 (Custom Flexbox & Modifiers).
-* **Seguridad:** Werkzeug (`generate_password_hash`, `check_password_hash`).
+- **User Authentication & Session Management:** Secure registration (`/register`), login (`/login`), and logout (`/logout`) flows using Flask cookie-based sessions (`SECRET_KEY`) and password hashing via `werkzeug.security` (`generate_password_hash` and `check_password_hash`).
+- **Strict User Data Isolation:** All database queries and mutations are scoped to `session["user_id"]`, ensuring users can only view, log, and delete their own workout records.
+- **Workout Set Logging:** Log exercises with weight (kg, decimal precision supported), repetitions, and an optional date (automatically defaults to the current date if left blank).
+- **Automated Progress Analytics:**
+  - **Total Volume Lifted:** Dynamically computes cumulative tonnage in kilograms (`SUM(peso * repeticiones)`).
+  - **Personal Records (PRs):** Aggregates and displays the maximum weight lifted (`MAX(peso)`) for each exercise.
+- **Workout History Management:** Displays all logged sets in reverse chronological order (`fecha DESC, id DESC`) with per-row deletion protected by a client-side confirmation prompt and server-side ownership validation.
+- **Dark Mode UI:** Clean, responsive dark-themed interface built with custom CSS3 Flexbox layouts.
 
 ---
 
-## ⚙️ Instalación y Configuración Local
+## 🛠️ Tech Stack
 
-Si deseas ejecutar este proyecto en tu máquina local, sigue estos pasos:
+- **Backend:** Python 3, Flask
+- **Database:** SQLite3 (via the `cs50` SQL library)
+- **Templating:** Jinja2
+- **Security:** Werkzeug (`generate_password_hash`, `check_password_hash`)
+- **Frontend:** HTML5, CSS3
 
-### 1. Clonar el repositorio
+---
+
+## 🏗️ Project Architecture & Directory Structure
+
+```text
+tracker-gym/
+├── static/
+│   └── styles.css          # Dark-mode styling, Flexbox layout, and table/card components
+├── templates/
+│   ├── index.html          # Main dashboard: workout form, stats, PRs, and history table
+│   ├── login.html          # User login form
+│   └── register.html       # User registration form with password confirmation
+├── .gitignore              # Ignores local SQLite database (gym.db) and Python cache files
+├── app.py                  # Flask application, authentication routes, and tracker endpoints
+├── crear_db.py             # SQLite3 database initialization script
+└── README.md               # Project documentation
+```
+
+### Database Schema (`gym.db`)
+
+The SQLite3 database consists of two relational tables linked by a foreign key:
+
+| Table | Columns | Description |
+| :--- | :--- | :--- |
+| `usuarios` | `id` (PK), `usuario` (UNIQUE), `hash` | Stores registered usernames and salted password hashes. |
+| `entrenamientos` | `id` (PK), `usuario_id` (FK), `ejercicio`, `peso`, `repeticiones`, `fecha` | Stores individual workout sets linked to `usuarios(id)`. |
+
+### Application Routes (`app.py`)
+
+| Method | Route | Description |
+| :--- | :--- | :--- |
+| `GET` / `POST` | `/register` | Validates form inputs, hashes password, creates user, and starts session. |
+| `GET` / `POST` | `/login` | Authenticates user credentials and stores `user_id` in session. |
+| `GET` | `/logout` | Clears the active session and redirects to `/login`. |
+| `GET` | `/` | Renders the dashboard with workout history, PRs, and total volume. |
+| `POST` | `/registrar` | Inserts a new workout set for the authenticated user. |
+| `POST` | `/eliminar` | Deletes a specific workout set owned by the authenticated user. |
+
+---
+
+## ⚙️ Installation & Local Setup
+
+Follow these steps to run the project locally:
+
+### 1. Clone the repository
+
 ```bash
-git clone [https://github.com/TU_USUARIO/tracker-gym.git](https://github.com/TU_USUARIO/tracker-gym.git)
+git clone https://github.com/mgc-cloud17/tracker-gym.git
 cd tracker-gym
+```
 
-### 2. Instalar dependecias
+### 2. Create and activate a virtual environment
 
-Asegúrate de tener Python 3.x instalado. Luego ejecuta:
+**macOS / Linux:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-pip install flask cs50 werkzeug
+**Windows (PowerShell):**
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
 
-### 3. Inicializar la Base de Datos
+### 3. Install dependencies
 
-Crea el archivo vacío e inicializa la estructura de las tablas:
+```bash
+pip install -r requirements.txt
+```
 
-touch gym.db
-python crear_db.py
+### 4. Run the application
 
-### 4. Iniciar la aplicación
+```bash
+python app.py
+```
 
-python -m flask run
+*(Alternatively, you can run `python -m flask run`.)*
 
+> **Note:** The SQLite3 database (`gym.db`) is automatically initialized from `schema.sql` on first startup—no manual setup required.
 
-Accede a la aplicación desde tu navegador en http://127.0.0.1:5000.
-
-### 📸 Estructura de la Base de Datos
-
-El sistema utiliza una arquitectura relacional simple conectando dos tablas mediante llave foránea (FOREIGN KEY):
-
-usuarios: id, usuario, hash
-
-entrenamientos: id, usuario_id, ejercicio, peso, repeticiones, fecha
-
-💡 Nota: Recuerda cambiar TU_USUARIO en la URL del comando git clone por tu usuario real de GitHub.
+Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ---
 
-### 📤 Para terminar y subirlo a GitHub:
+## 📸 Screenshots
 
-Una vez que guardes el archivo `README.md`, solo ejecuta en tu Git Bash:
+> Place your screenshot files inside an `./assets/` directory at the root of the repository to display them below.
 
-```bash
-git add .
-git commit -m "Docs: Add full README documentation"
-git push
+| Dashboard & Progress Stats | User Authentication |
+| :---: | :---: |
+| ![Dashboard Preview](./assets/dashboard.png) | ![Login Preview](./assets/login.png) |
